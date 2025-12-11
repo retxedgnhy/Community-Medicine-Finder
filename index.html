@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Community Medicine Finder</title>
+</head>
+<body>
+    <div id = "header">
+        <h1>Community Medicine Finder</h1>
+        <p>Real time crowdsourced map of medicine availability</p>
+    </div>
+    <div id = "searchSection">
+        <h2>Find medicine near me</h2>
+        <p>Medicine Name</p>
+        <input type = "text" id = "medSearch" placeholder = "e.g. Panadol, Zyrtec">
+        <button id = "searchButton">Search</button>
+    </div>
+    <div id = "reportSection">
+        <h2>Submit a Report</h2>
+        <p>Medicine Name</p>
+        <input type = "text" id = "reportMed" placeholder = "e.g. Panadol Extra 500mg">
+        <p>Status</p>
+        <!--Used AI to help create the select section-->>
+        <select id = "reportStatus">
+            <option value = "IN_STOCK">In stock</option>
+            <option value = "LOW_STOCK">Low stock</option>
+            <option value = "OUT_OF_STOCK">No stock</option>
+        </select>
+        <p>Store Name</p>
+        <input type = "text" id = "reportStore" placeholder = "e.g. Guardian@Bugis">
+        <p>Notes</p>
+        <input type = "text" id = "reportNotes" placeholder = "e.g. 3 boxes seen at 10.00 a.m.">
+        <button id = "submitButton">Submit</button>
+    </div>
+    <div id = "reportsSection">
+        <h2>Reports</h2>
+        <div id = "reportsList">
+            <!--Fill in recent reports-->
+        </div>
+    </div>
+     <div id = "mapSection">
+        <h2>Map</h2>
+        <div id = "mapPlaceholder">
+            <!--Insert map with stock here if we have time-->
+        </div>
+    </div>
+    
+    
+</body>
+</html>
