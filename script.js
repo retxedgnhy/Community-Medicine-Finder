@@ -1,4 +1,13 @@
 let reports = []
+let alternatives = {
+    "Neuflo": ["Danzen", "Leftose"],
+    "Danzen": ["Leftose", "Neuflo"],
+    "Leftose": ["Danzen", "Neuflo"],
+    "Zyrtec": ["Loratadine", "Cetirizine"],
+    "Loratadine":["Zyrtec","Cetirizine"],
+    "Cetirizine":["Zyrtec","Loratadine"],
+    "ART test kit": ["COVID self-test kit (other brands)"]
+};
 function minutesSince(timestamp) {
     let now = new Date();
     let then = new Date(timestamp);
@@ -97,16 +106,53 @@ function showRiskSummary() {
             ? `${minutesSince(s.lastSeen)} min ago`
             : "No recent in-stock reports";
 
+        let hasAlternatives = alternatives[med];
+
         let item = document.createElement("div");
+
         item.innerHTML = `
             <p><strong>${med}</strong></p>
             <p style="color:${color}; font-weight:600;">${risk}</p>
             <small>Last seen available: ${lastSeenText}</small>
+
+            ${
+                hasAlternatives
+                ? `
+                    <p class="toggle-alt" style="cursor:pointer; color:#2563eb; font-weight:600; margin-top:8px;">
+                        Show alternatives
+                    </p>
+                    <div class="alt-list" style="display:none; margin-top:6px;">
+                        <ul>
+                            ${alternatives[med].map(a => `<li>${a}</li>`).join("")}
+                        </ul>
+                    </div>
+                    <p style="margin-top:6px; font-size:0.75rem; color:#6b7280;">
+                        Disclaimer: Alternatives shown are for general reference only. Please consult a pharmacist or healthcare professional.
+                    </p>
+                  `
+                : `
+                    <p style="font-size:0.85rem; margin-top:6px; color:#6b7280;">
+                        Common alternatives not updated yet
+                    </p>
+                  `
+            }
         `;
+
+        let toggle = item.querySelector(".toggle-alt");
+        let list = item.querySelector(".alt-list");
+
+        if (toggle && list) {
+            toggle.addEventListener("click", () => {
+                let open = list.style.display === "block";
+                list.style.display = open ? "none" : "block";
+                toggle.textContent = open ? "Show alternatives" : "Hide alternatives";
+            });
+        }
 
         container.appendChild(item);
     }
 }
+
 //END OF AI
 
 document.getElementById("submitButton").addEventListener("click", () =>{
