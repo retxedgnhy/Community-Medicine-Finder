@@ -2,30 +2,66 @@ body {
     margin: 0;
     padding: 20px;
     font-family: system-ui, sans-serif;
-    background: #f4f6f9; 
-    color: #111; 
+    background: linear-gradient(180deg, #f8fafc, #eef2f7);
+    color: #111;
 }
-
-
-#header,
-#searchSection,
-#reportSection,
-#reportsSection,
-#mapSection {
-    max-width: 600px;
-    margin: 0 auto 30px auto;
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 12px;
-    border: 1px solid #d1d5db;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-}
-
-h1, h2 {
+h1 {
+    font-size: 1.9rem;
     margin-bottom: 10px;
     font-weight: 700;
     color: #111;
 }
+
+h2 {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    font-weight: 700;
+    color: #111;
+}
+
+p {
+    color: #4b5563;
+}
+
+/*Used AI to style header*/
+#header{
+    background:  
+        linear-gradient(rgba(2,6,23,0.6), rgba(2,6,23,0.6)),
+        url("https://media.istockphoto.com/id/156292188/photo/doctor-holding-out-several-packs-of-a-variety-of-pills.jpg?s=612x612&w=0&k=20&c=WEYtSbG6FM0WDbm7E_3QT8ZCqIEwQ9tDnGakyg5hhIw=");
+    background-size: cover;
+    background-position: center;
+
+    color: white;
+    padding: 60px 30px;
+    text-align: center;
+
+    border-radius: 18px;
+    margin-bottom: 40px;
+}
+#header h1 {
+    font-size: 2.2rem;
+    color:#f5c451
+}
+
+#header p {
+    color: #e5e7eb;
+}
+
+
+#searchSection,
+#reportSection,
+#reportsSection,
+#mapSection {
+    max-width: 700px;
+    margin: 0 auto 30px auto;
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #d1d5db;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+
 
 p {
     margin: 6px 0;
@@ -94,4 +130,22 @@ button:active {
     border-radius: 12px;
     border: 1px solid #cbd5e0;
     margin-top: 10px;
+}
+
+#riskSection {
+    max-width: 700px;
+    margin: 0 auto 30px auto;
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #d1d5db;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+#riskList div {
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    background: #f9fafb;
+    border-left: 5px solid #3b82f6;
 }

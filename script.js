@@ -1,21 +1,108 @@
 let reports = []
+function minutesSince(timestamp) {
+    let now = new Date();
+    let then = new Date(timestamp);
+    return Math.floor((now - then) / 60000);
+}
 
-function renderReports(){
-    let container = document.getElementById("reportsList")
-    container.innerHTML = ""
-    for (let i = 0;i < reports.length;i++){
-        let r = reports[i]
-        let item = document.createElement("div")
+function getConfidence(minutes) {
+    if (minutes <= 120) return "High confidence";
+    if (minutes <= 360) return "Medium confidence";
+    return "Low confidence";
+}
+
+function renderReports() {
+    let container = document.getElementById("reportsList");
+    container.innerHTML = "";
+
+    for (let i = 0; i < reports.length; i++) {
+        let r = reports[i];
+        let mins = minutesSince(r.timestamp);
+        let confidence = getConfidence(mins);
+
+        let color =
+            confidence === "High confidence" ? "#10b981" :
+            confidence === "Medium confidence" ? "#f59e0b" :
+            "#ef4444";
+
+        let item = document.createElement("div");
         item.innerHTML = `
-            <p><strong>${r.medicine}</strong>(${r.status})</p>
+            <p><strong>${r.medicine}</strong> (${r.status})</p>
             <p>${r.store}</p>
             <p>${r.notes}</p>
-            <small>${r.timestamp}</small>
+            <small>
+                ${mins} min ago • 
+                <span style="color:${color}; font-weight:600;">
+                    ${confidence}
+                </span>
+            </small>
             <hr>
-        `
-        container.appendChild(item)
+        `;
+
+        container.appendChild(item);
     }
 }
+//AI
+function renderRiskSummary() {
+    let summary = {};
+
+    for (let r of reports) {
+        if (!summary[r.medicine]) {
+            summary[r.medicine] = {
+                inStock: 0,
+                lowStock: 0,
+                outStock: 0,
+                lastSeen: null
+            };
+        }
+
+        if (r.status === "IN_STOCK") {
+            summary[r.medicine].inStock++;
+            summary[r.medicine].lastSeen = r.timestamp;
+        } else if (r.status === "LOW_STOCK") {
+            summary[r.medicine].lowStock++;
+        } else {
+            summary[r.medicine].outStock++;
+        }
+    }
+
+    return summary;
+}
+
+function showRiskSummary() {
+    let container = document.getElementById("riskList");
+    container.innerHTML = "";
+
+    let summary = renderRiskSummary();
+
+    for (let med in summary) {
+        let s = summary[med];
+
+        let risk =
+            s.outStock > 0 ? "High risk" :
+            s.lowStock > 0 ? "Medium risk" :
+            "Low risk";
+
+        let color =
+            risk === "High risk" ? "#ef4444" :
+            risk === "Medium risk" ? "#f59e0b" :
+            "#10b981";
+
+        let lastSeenText = s.lastSeen
+            ? `${minutesSince(s.lastSeen)} min ago`
+            : "No recent in-stock reports";
+
+        let item = document.createElement("div");
+        item.innerHTML = `
+            <p><strong>${med}</strong></p>
+            <p style="color:${color}; font-weight:600;">${risk}</p>
+            <small>Last seen available: ${lastSeenText}</small>
+        `;
+
+        container.appendChild(item);
+    }
+}
+//END OF AI
 
 document.getElementById("submitButton").addEventListener("click", () =>{
     let med = document.getElementById("reportMed").value;
@@ -39,6 +126,7 @@ document.getElementById("submitButton").addEventListener("click", () =>{
     }
     reports.push(report)
     renderReports()
+    showRiskSummary()
 })
 // AI for the map
 let selectedLocation = null;

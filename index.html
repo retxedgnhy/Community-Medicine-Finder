@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Community Medicine Finder</title>
+    <title>Community Medicine & Supplies Finder</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id = "header">
-        <h1>Community Medicine Finder</h1>
-        <p>Real time crowdsourced map of medicine availability</p>
+        <h1>Community Medicine & Supplies Finder</h1>
+        <p>Real time crowdsourced map of medicine & supplies availability</p>
     </div>
     <div id = "searchSection">
         <h2>Find medicine near me</h2>
-        <p>Medicine Name</p>
-        <input type = "text" id = "medSearch" placeholder = "e.g. Panadol, Zyrtec">
+        <p>Medicine / Supplies Name</p>
+        <input type = "text" id = "medSearch" placeholder = "e.g. Panadol, Insulin">
         <button id = "searchButton">Search</button>
     </div>
     <div id = "reportSection">
         <h2>Submit a Report</h2>
         <p>Medicine Name</p>
-        <input type = "text" id = "reportMed" placeholder = "e.g. Panadol Extra 500mg">
+        <input type = "text" id = "reportMed" placeholder = "e.g. Panadol Soluble">
         <p>Status</p>
         <!--Used AI to help create the select section-->
         <select id = "reportStatus">
@@ -33,6 +33,11 @@
         <input type = "text" id = "reportNotes" placeholder = "e.g. 3 boxes seen at 10.00 a.m.">
         <button id = "submitButton">Submit</button>
     </div>
+    <div id="riskSection">
+        <h2>Medicine Supply Shortage Risk Overview</h2>
+        <div id="riskList"></div>
+    </div>
+
     <div id = "reportsSection">
         <h2>Reports</h2>
         <div id = "reportsList">
