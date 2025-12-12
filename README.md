@@ -19,7 +19,7 @@ Frontend: HTML, CSS, JavaScript
 Mapping: Leaflet.js
 
 4. Setup
-1. git clone https://github.com/your-username/community-medicine-finder.git
+1. git clone https://github.com/retxedgnhy/Community-Medicine-Finder.git
 2. Open the folder in VS code
 3. Run the project using one of the following methods:
     Open index.html directly in a web browser, or
