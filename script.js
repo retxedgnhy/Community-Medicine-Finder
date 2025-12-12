@@ -1,4 +1,5 @@
 let reports = []
+let allReports = []
 let alternatives = {
     "Neuflo": ["Danzen", "Leftose"],
     "Danzen": ["Leftose", "Neuflo"],
@@ -9,7 +10,7 @@ let alternatives = {
     "ART test kit": ["COVID self-test kit (other brands)"]
 };
 function minutesSince(timestamp) {
-    let now = new Date();
+    let now = new Date()
     let then = new Date(timestamp);
     return Math.floor((now - then) / 60000);
 }
@@ -176,7 +177,8 @@ document.getElementById("submitButton").addEventListener("click", () =>{
         lat: selectedLocation.lat,   // location added
         lng: selectedLocation.lng
     }
-    reports.push(report)
+    allReports.push(report);
+    reports = [...allReports];
     renderReports()
     showRiskSummary()
     renderMapReports();
@@ -240,32 +242,35 @@ setTimeout(()=>{
 //END of AI
 
 
-document.getElementById("searchButton").addEventListener("click", function () {
-    let searchText = document.getElementById("medSearch").value.toLowerCase();
-    let radius = document.getElementById("radiusSelect").value;
-    let results = [];
-    for (let i = 0; i < reports.length; i++) {
-        let medName = reports[i].medicine.toLowerCase();
-        if (medName.includes(searchText)) {
-            if (radius !== "none" && selectedLocation) {
-                let dist = getDistanceKm(
-                    selectedLocation.lat,
-                    selectedLocation.lng,
-                    reports[i].lat,
-                    reports[i].lng
-                );
+document.getElementById("searchButton").addEventListener("click", () => {
+    let searchText = document.getElementById("medSearch").value.toLowerCase()
+    let radius = document.getElementById("radiusSelect").value
 
-                if (dist > Number(radius)) {
-                    continue;
-                }
-            }
-            results.push(reports[i]);
+    let filtered = []
+
+    for (let r of allReports) {
+        if (!r.medicine.toLowerCase().includes(searchText)) continue;
+
+        if (radius !== "none" && selectedLocation) {
+            let dist = getDistanceKm(
+                selectedLocation.lat,
+                selectedLocation.lng,
+                r.lat,
+                r.lng
+            )
+
+            if (dist > Number(radius)) continue;
         }
-    }
-    reports = results;
-    renderReports();
 
-});
+        filtered.push(r)
+    }
+
+    reports = filtered
+    renderReports()
+    showRiskSummary()
+    renderMapReports()
+})
+
 
 function showResults(list) {
     let container = document.getElementById("reportsList")
