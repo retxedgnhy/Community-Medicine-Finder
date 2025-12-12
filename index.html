@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>Community Medicine Finder</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id = "header">
@@ -19,7 +21,7 @@
         <p>Medicine Name</p>
         <input type = "text" id = "reportMed" placeholder = "e.g. Panadol Extra 500mg">
         <p>Status</p>
-        <!--Used AI to help create the select section-->>
+        <!--Used AI to help create the select section-->
         <select id = "reportStatus">
             <option value = "IN_STOCK">In stock</option>
             <option value = "LOW_STOCK">Low stock</option>
@@ -39,11 +41,13 @@
     </div>
      <div id = "mapSection">
         <h2>Map</h2>
-        <div id = "mapPlaceholder">
-            <!--Insert map with stock here if we have time-->
+        <div id = "map">
+           
         </div>
     </div>
     
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
     
 </body>
 </html>
