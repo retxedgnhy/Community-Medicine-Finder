@@ -14,11 +14,33 @@
         <h2>Find medicine near me</h2>
         <p>Medicine / Supplies Name</p>
         <input type = "text" id = "medSearch" placeholder = "e.g. Zyrtec, ART kit">
+        
+        <p>Search radius</p>
+        <select id="radiusSelect">
+            <option value="none">No distance filter</option>
+            <option value="1">Within 1 km</option>
+            <option value="3">Within 3 km</option>
+            <option value="5">Within 5 km</option>
+        </select>
         <button id = "searchButton">Search</button>
+   
+
+    </div>
+    
+    <div id="riskSection">
+        <h2>Medicine Supply Shortage Risk Overview</h2>
+        <div id="riskList"></div>
+    </div>
+
+    <div id = "reportsSection">
+        <h2>Reports</h2>
+        <div id = "reportsList">
+            <!--Fill in recent reports-->
+        </div>
     </div>
     <div id = "reportSection">
         <h2>Submit a Report</h2>
-        <p>Medicine Name</p>
+        <p>Medicine/Supply Name</p>
         <input type = "text" id = "reportMed" placeholder = "e.g. Zyrtec">
         <p>Category</p>
         <select id="reportCategory">
@@ -33,28 +55,26 @@
             <option value = "OUT_OF_STOCK">No stock</option>
         </select>
         <p>Store Name</p>
-        <input type = "text" id = "reportStore" placeholder = "e.g. Guardian@Bugis">
+        <input type = "text" id = "reportStore" placeholder = "e.g. Guardian@Bugis Junction">
         <p>Notes</p>
-        <input type = "text" id = "reportNotes" placeholder = "e.g. 3 boxes seen at 10.00 a.m.">
+        <input type = "text" id = "reportNotes" placeholder = "e.g. Quantity: 3 (Seen at 10.00 a.m.)">
         <button id = "submitButton">Submit</button>
     </div>
-    <div id="riskSection">
-        <h2>Medicine Supply Shortage Risk Overview</h2>
-        <div id="riskList"></div>
-    </div>
-
-    <div id = "reportsSection">
-        <h2>Reports</h2>
-        <div id = "reportsList">
-            <!--Fill in recent reports-->
-        </div>
-    </div>
-     <div id = "mapSection">
+    <div id = "mapSection">
         <h2>Map</h2>
+        <h3 style="color: red;">Legend</h3>
+        <p><br>
+🟢 Green — In stock (recent community reports)<br>
+🟠 Amber — Low stock (limited availability)<br>
+🔴 Red — Out of stock<br><br>
+<p>
+    
         <div id = "map">
            
         </div>
+        <p id="mapHint">Click on the map to choose the search location.</p>
     </div>
+
     
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="script.js"></script>

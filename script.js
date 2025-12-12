@@ -172,13 +172,14 @@ document.getElementById("submitButton").addEventListener("click", () =>{
         status:status,
         store:store,
         notes:notes,
-        timestamp: new Date().toLocaleString(),//used Chatgpt to do this
+        timestamp: new Date().toISOString(), //used Chatgpt to do this
         lat: selectedLocation.lat,   // location added
         lng: selectedLocation.lng
     }
     reports.push(report)
     renderReports()
     showRiskSummary()
+    renderMapReports();
 })
 // AI for the map
 let selectedLocation = null;
@@ -188,8 +189,38 @@ const map = L.map("map").setView([1.3521, 103.8198], 12); // Singapore default c
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19
 }).addTo(map);
+let reportMarkers = L.layerGroup().addTo(map);
+
 
 let marker = null;
+
+function renderMapReports() {
+    reportMarkers.clearLayers();
+
+    for (let r of reports) {
+        let color =
+            r.status === "IN_STOCK" ? "#10b981" :
+            r.status === "LOW_STOCK" ? "#f59e0b" :
+            "#ef4444";
+
+        L.circleMarker([r.lat, r.lng], {
+            radius: 9,
+            color: color,
+            fillColor: color,
+            fillOpacity: 0.35,   
+            weight: 3,           
+            opacity: 0.9
+        })
+
+        .bindPopup(`
+            <strong>${r.medicine}</strong><br>
+            ${r.status}<br>
+            ${r.store}<br>
+            ${minutesSince(r.timestamp)} min ago
+        `)
+        .addTo(reportMarkers);
+    }
+}
 
 // When user clicks map → save location + show marker
 map.on("click", function(e) {
@@ -208,18 +239,34 @@ setTimeout(()=>{
 },200);
 //END of AI
 
-document.getElementById("searchButton").addEventListener("click",function(){
-    let searchText = document.getElementById("medSearch").value.toLowerCase()
-    let results = []
+
+document.getElementById("searchButton").addEventListener("click", function () {
+    let searchText = document.getElementById("medSearch").value.toLowerCase();
+    let radius = document.getElementById("radiusSelect").value;
+    let results = [];
     for (let i = 0; i < reports.length; i++) {
         let medName = reports[i].medicine.toLowerCase();
         if (medName.includes(searchText)) {
-            results.push(reports[i])
+            if (radius !== "none" && selectedLocation) {
+                let dist = getDistanceKm(
+                    selectedLocation.lat,
+                    selectedLocation.lng,
+                    reports[i].lat,
+                    reports[i].lng
+                );
+
+                if (dist > Number(radius)) {
+                    continue;
+                }
+            }
+            results.push(reports[i]);
         }
     }
+    reports = results;
+    renderReports();
 
-    showResults(results)
-})
+});
+
 function showResults(list) {
     let container = document.getElementById("reportsList")
     container.innerHTML = ""
@@ -237,4 +284,43 @@ function showResults(list) {
         `
         container.appendChild(item)
     }
+}
+//USED AI FOR RUNSEARCHWITHRADIUS
+function runSearchWithRadius(searchText, radius, userLocation) {
+    let results = [];
+
+    for (let r of reports) {
+        if (!r.medicine.toLowerCase().includes(searchText)) continue;
+
+        if (radius !== "none") {
+            let distance = getDistanceKm(
+                userLocation.lat,
+                userLocation.lng,
+                r.lat,
+                r.lng
+            );
+
+            if (distance > Number(radius)) continue;
+        }
+
+        results.push(r);
+    }
+
+    showResults(results);
+}
+
+function getDistanceKm(lat1, lng1, lat2, lng2) {
+    let R = 6371;
+    let dLat = (lat2 - lat1) * Math.PI / 180;
+    let dLng = (lng2 - lng1) * Math.PI / 180;
+
+    let a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) *
+        Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLng / 2) *
+        Math.sin(dLng / 2);
+
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
 }
