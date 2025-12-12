@@ -2,9 +2,20 @@ body {
     margin: 0;
     padding: 20px;
     font-family: system-ui, sans-serif;
-    background: linear-gradient(180deg, #f8fafc, #eef2f7);
+
+    background:
+        linear-gradient(
+            rgba(248,250,252,0.80),
+            rgba(238,242,247,0.85)
+        ),
+        url("https://png.pngtree.com/background/20211217/original/pngtree-health-care-blue-abstract-light-and-shadow-background-picture-image_1590829.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
     color: #111;
 }
+
 h1 {
     font-size: 1.9rem;
     margin-bottom: 10px;
@@ -136,11 +147,12 @@ button:active {
     max-width: 700px;
     margin: 0 auto 30px auto;
     padding: 24px;
-    background: #ffffff;
+    background: linear-gradient(180deg, #eff6ff, #e0f2fe);
     border-radius: 16px;
     border: 1px solid #d1d5db;
     box-shadow: 0 6px 18px rgba(0,0,0,0.06);
 }
+
 
 #riskList div {
     padding: 12px;
@@ -148,4 +160,7 @@ button:active {
     border-radius: 10px;
     background: #f9fafb;
     border-left: 5px solid #3b82f6;
+}
+#reportsSection{
+    background: linear-gradient(180deg, #eff6ff, #e0f2fe);
 }

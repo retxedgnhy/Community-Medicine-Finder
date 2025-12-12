@@ -27,7 +27,12 @@ function renderReports() {
 
         let item = document.createElement("div");
         item.innerHTML = `
-            <p><strong>${r.medicine}</strong> (${r.status})</p>
+            <p>
+                <strong>${r.medicine}</strong> (${r.status})
+                <span style="color:#64748b; font-size:0.85em;">
+                    • ${r.category}
+                </span>
+            </p>
             <p>${r.store}</p>
             <p>${r.notes}</p>
             <small>
@@ -114,9 +119,10 @@ document.getElementById("submitButton").addEventListener("click", () =>{
         alert("Please click on the map to pick a location.");
         return;
     }
-
+    let category = document.getElementById("reportCategory").value;
     let report = {
         medicine:med,
+        category:category,
         status:status,
         store:store,
         notes:notes,

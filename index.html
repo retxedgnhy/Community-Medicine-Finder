@@ -13,13 +13,18 @@
     <div id = "searchSection">
         <h2>Find medicine near me</h2>
         <p>Medicine / Supplies Name</p>
-        <input type = "text" id = "medSearch" placeholder = "e.g. Panadol, Insulin">
+        <input type = "text" id = "medSearch" placeholder = "e.g. Panadol Soluble, ART kit">
         <button id = "searchButton">Search</button>
     </div>
     <div id = "reportSection">
         <h2>Submit a Report</h2>
         <p>Medicine Name</p>
         <input type = "text" id = "reportMed" placeholder = "e.g. Panadol Soluble">
+        <p>Category</p>
+        <select id="reportCategory">
+            <option value="MEDICINE">Medicine</option>
+            <option value="SUPPLIES">Medical Supplies</option>
+        </select>
         <p>Status</p>
         <!--Used AI to help create the select section-->
         <select id = "reportStatus">
